@@ -158,7 +158,12 @@ Inspired by [Phillip Newton's Games::Dice](http://search.cpan.org/~pne/Games-Dic
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
-## Author
+## Original Author
 
-[Troy Goode](https://github.com/TroyGoode) ([troygoode@gmail.com](mailto:troygoode@gmail.com))
+[Troy Goode](https://github.com/TroyGoode/) ([troygoode@gmail.com](mailto:troygoode@gmail.com))
 
+## Contributors
+- Mark Funk
+- [Connor Sauve](https://github.com/csauve/)
+- [cajahnke](https://github.com/cajahnke/)
+- [Duane Sibilly](https://github.com/dsibilly/)
