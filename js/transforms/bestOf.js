@@ -1,10 +1,11 @@
 export default (rolledDice, value) => {
-    const result = [],
-        sorted = rolledDice.sort((a, b) => b - a);
+    const sorted = rolledDice.sort((a, b) => b - a);
 
-    for (let i = 0; i < sorted.length && i < (value / 1); i += 1) {
-        result.push(sorted[i]);
-    }
+    return sorted.reduce((memo, item, index) => {
+        if (index < (value / 1)) {
+            memo.push(item);
+        }
 
-    return result;
+        return memo;
+    }, []);
 };
