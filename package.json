@@ -1,46 +1,107 @@
 {
-  "name": "roll",
-  "version": "1.2.0",
-  "author": "Troy Goode <troygoode@gmail.com> (https://github.com/troygoode/)",
-  "description": "node.js package for rolling dice and adding modifiers. ex: 2d6+1",
-  "keywords": [
-    "roll",
-    "random",
-    "dice",
-    "games",
-    "rpg",
-    "role playing"
-  ],
-  "homepage": "https://github.com/troygoode/node-roll/",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/troygoode/node-roll.git"
-  },
-  "contributors": [
-    {
-      "name": "Troy Goode",
-      "email": "troygoode@gmail.com",
-      "web": "https://github.com/troygoode/"
-    }
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/TroyGoode/node-roll/issues"
-  },
-  "main": "./lib/index.js",
-  "engines": {
-    "node": ">=4"
-  },
-  "devDependencies": {
-    "lint": "^1.1.2",
-    "mocha": "^3.0.2",
-    "should": "^11.1.0"
-  },
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
-    "lint": "./node_modules/lint/bin/node-lint lib test"
-  },
-  "bin": {
-    "roll": "bin/roll"
-  }
+    "author": "Troy Goode <troygoode@gmail.com> (https://github.com/troygoode/)",
+    "babel": {
+        "comments": false,
+        "plugins": [
+            "transform-line",
+            "transform-runtime"
+        ],
+        "presets": [
+            "env"
+        ],
+        "sourceMaps": "inline"
+    },
+    "bin": {
+        "roll": "bin/roll"
+    },
+    "bugs": {
+        "url": "https://github.com/dsibilly/node-roll/issues"
+    },
+    "contributors": [
+        {
+            "email": "cajahnke@users.noreply.github.com",
+            "name": "cajahnke",
+            "web": "https://github.com/cajahnke/"
+        },
+        {
+            "email": "mfunk86@gmail.com",
+            "name": "Mark Funk"
+        },
+        {
+            "email": "duane@sibilly.com",
+            "name": "Duane Sibilly",
+            "web": "https://github.com/dsibilly/"
+        }
+    ],
+    "dependencies": {
+        "babel-runtime": "^6.26.0",
+        "isotropic-error": "^0.6.0",
+        "isotropic-make": "^0.6.0"
+    },
+    "description": "node.js package for rolling dice and adding modifiers. ex: 2d6+1",
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-istanbul": "^0.12.2",
+        "babel-plugin-transform-line": "^0.4.0",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.6.1",
+        "chai": "^4.1.2",
+        "depcheck": "^0.6.9",
+        "eslint": "^4.19.1",
+        "eslint-config-isotropic": "^0.6.0",
+        "mocha": "^5.1.0",
+        "nsp": "^3.2.1"
+    },
+    "engines": {
+        "node": ">=6"
+    },
+    "eslintConfig": {
+        "env": {
+            "es6": true,
+            "mocha": true,
+            "node": true
+        },
+        "extends": "isotropic",
+        "parserOptions": {
+            "ecmaFeatures": {
+                "experimentalObjectRestSpread": true,
+                "globalReturn": false,
+                "impliedStrict": true,
+                "jsx": false
+            },
+            "ecmaVersion": 2017,
+            "sourceType": "module"
+        },
+        "root": true
+    },
+    "homepage": "https://github.com/dsibilly/node-roll/",
+    "keywords": [
+        "dice",
+        "games",
+        "random",
+        "role playing",
+        "roll",
+        "rpg"
+    ],
+    "license": "MIT",
+    "main": "lib/index.js",
+    "name": "roll",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/dsibilly/node-roll.git"
+    },
+    "scripts": {
+        "build": "BABEL_ENV=build babel js -d lib",
+        "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha --report lcovonly -- -R spec",
+        "lint": "node_modules/.bin/eslint bin js",
+        "posttest": "[ -z \"$npm_config_coverage\" ] || babel-istanbul check-coverage --branches 80 --functions 100 --lines 100 --statements 100",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run securityCheck && npm test --coverage",
+        "pretest": "npm run lint",
+        "rebuild": "rm -rf ./node_modules && rm package-lock.json && npm install",
+        "securityCheck": "nsp check",
+        "test": "babel-node ./node_modules/.bin/babel-istanbul test _mocha"
+    },
+    "version": "1.3.0"
 }

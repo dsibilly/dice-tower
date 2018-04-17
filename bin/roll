@@ -1,19 +1,11 @@
 #!/usr/bin/env node
+const query = process.argv.slice(2)[0],
+    Roll = require(`${__dirname}/../lib/index`).default,
+    roll = new Roll();
 
-(function () {
-  'use strict';
-
-  var Roll = require(__dirname + '/../lib/index'),
-    roll = new Roll(),
-    input = process.argv.slice(2)[0];
-
-  try {
-    console.log(roll.roll(input).result);
-    process.exit(0);
-  } catch (e) {
-    console.error(e.message);
+try {
+    console.log(roll.roll(query).result);
+} catch (error) {
+    console.error(`${error.name}: ${error.message}`);
     process.exit(1);
-  }
-
-}());
-
+}
