@@ -1,8 +1,12 @@
+/* eslint no-unused-expressions: 0 */
+
 import {
     beforeEach,
     describe,
     it
 } from 'mocha';
+
+import DiceTower from '../js/DiceTower';
 
 import {
     exec
@@ -13,9 +17,8 @@ import {
 } from 'chai';
 
 import FakeRandomNumberGenerator from './FakeRandomNumberGenerator';
-import Roll from '../js/index';
 
-describe('node-roll', () => {
+describe('dice-tower', () => {
     // can only test this library if we make things not actually random
     const fakeRandomNumberGenerator = new FakeRandomNumberGenerator([
             0.24, // 20 * .24 =>  4.8 =>  5
@@ -26,14 +29,14 @@ describe('node-roll', () => {
             0.33, // 20 * .66 =>  6.6 =>  7
             0.12 // 20 * .12 =>  2.4 =>  2
         ]),
-        fixedRoller = new Roll(fakeRandomNumberGenerator.next.bind(fakeRandomNumberGenerator)),
-        roller = new Roll();
+        fixedDiceTower = new DiceTower(fakeRandomNumberGenerator.next.bind(fakeRandomNumberGenerator)),
+        diceTower = new DiceTower();
 
     beforeEach(fakeRandomNumberGenerator.reset.bind(fakeRandomNumberGenerator));
 
     it('validates input strings', done => {
         try {
-            roller.roll('garbage');
+            diceTower.roll('garbage');
             done('Should not be reachable');
         } catch (error) {
             expect(error.name).to.eql('InvalidInputError');
@@ -44,12 +47,12 @@ describe('node-roll', () => {
     });
 
     it('exposes validation as static method', () => {
-        expect(Roll.validate('2d20+3')).to.be.true;
-        expect(Roll.validate('garbage')).to.be.false;
+        expect(DiceTower.validate('2d20+3')).to.be.true;
+        expect(DiceTower.validate('garbage')).to.be.false;
     });
 
     it('uses custom transformation arrays correctly', () => {
-        const result = fixedRoller.roll({
+        const result = fixedDiceTower.roll({
             quantity: 2,
             sides: 20,
             transformations: [
@@ -69,7 +72,7 @@ describe('node-roll', () => {
 
     it('uses custom transformation functions correctly', () => {
         const dropOnes = results => results.filter(result => result !== 1),
-            result = roller.roll({
+            result = diceTower.roll({
                 quantity: 5,
                 sides: 4,
                 transformations: [
@@ -85,7 +88,7 @@ describe('node-roll', () => {
 
     it('fails properly with no input', done => {
         try {
-            roller.roll();
+            diceTower.roll();
             done('Should not be reachable');
         } catch (error) {
             expect(error.name).to.eql('InvalidInputError');
@@ -96,7 +99,7 @@ describe('node-roll', () => {
 
     describe('single die rolls', () => {
         it('d20', () => {
-            const result = fixedRoller.roll('d20');
+            const result = fixedDiceTower.roll('d20');
 
             expect(result.rolled.length).to.eql(1);
             expect(result.rolled[0]).to.eql(5);
@@ -104,7 +107,7 @@ describe('node-roll', () => {
         });
 
         it('percentile die', () => {
-            const result = fixedRoller.roll('d%');
+            const result = fixedDiceTower.roll('d%');
 
             expect(result.rolled.length).to.eql(1);
             expect(result.rolled[0]).to.eql(25);
@@ -114,7 +117,7 @@ describe('node-roll', () => {
 
     describe('multi die rolls', () => {
         it('2d20', () => {
-            const result = fixedRoller.roll('2d20');
+            const result = fixedDiceTower.roll('2d20');
 
             expect(result.rolled.length).to.eql(2);
             expect(result.rolled[0]).to.eql(5);
@@ -123,7 +126,7 @@ describe('node-roll', () => {
         });
 
         it('1d20 + 2d20', () => {
-            const result = fixedRoller.roll('1d20+2d20');
+            const result = fixedDiceTower.roll('1d20+2d20');
 
             expect(result.rolled.length).to.eql(2);
             expect(result.rolled[0][0]).to.eql(11);
@@ -133,7 +136,7 @@ describe('node-roll', () => {
         });
 
         it('1d20 + 2d20 + 3d20', () => {
-            const result = fixedRoller.roll('1d20+2d20+3d20');
+            const result = fixedDiceTower.roll('1d20+2d20+3d20');
 
             expect(result.rolled.length).to.eql(3);
             expect(result.rolled[0][0]).to.eql(7);
@@ -146,7 +149,7 @@ describe('node-roll', () => {
         });
 
         it('Yahtzee', () => {
-            const result = fixedRoller.roll('5d6');
+            const result = fixedDiceTower.roll('5d6');
 
             expect(result.rolled.length).to.eql(5);
             expect(result.rolled[0]).to.eql(2);
@@ -158,7 +161,7 @@ describe('node-roll', () => {
         });
 
         it('Double Yahtzee', () => {
-            const result = fixedRoller.roll('5d6+5d6');
+            const result = fixedDiceTower.roll('5d6+5d6');
 
             expect(result.rolled.length).to.eql(2);
             expect(result.rolled[0][0]).to.eql(2);
@@ -177,37 +180,37 @@ describe('node-roll', () => {
 
     describe('die rolls with modifiers', () => {
         it('2d20 + 3', () => {
-            const result = fixedRoller.roll('2d20+3');
+            const result = fixedDiceTower.roll('2d20+3');
 
             expect(result.result).to.eql(21); // SUM + 3
         });
 
         it('2d20 - 3', () => {
-            const result = fixedRoller.roll('2d20-3');
+            const result = fixedDiceTower.roll('2d20-3');
 
             expect(result.result).to.eql(15);
         });
 
         it('2d20 * 3', () => {
-            const result = fixedRoller.roll('2d20*3');
+            const result = fixedDiceTower.roll('2d20*3');
 
             expect(result.result).to.eql(54);
         });
 
         it('2d20 / 3', () => {
-            const result = fixedRoller.roll('2d20/3');
+            const result = fixedDiceTower.roll('2d20/3');
 
             expect(result.result).to.eql(6);
         });
 
         it('5d20, Best 1', () => {
-            const result = fixedRoller.roll('5d20b1');
+            const result = fixedDiceTower.roll('5d20b1');
 
             expect(result.result).to.eql(14);
         });
 
         it('5d20, Best 2', () => {
-            const result = fixedRoller.roll('5d20b2');
+            const result = fixedDiceTower.roll('5d20b2');
 
             expect(result.calculations[1].length).to.eql(2);
             expect(result.calculations[1][0]).to.eql(14);
@@ -216,13 +219,13 @@ describe('node-roll', () => {
         });
 
         it('5d20, Worst 1', () => {
-            const result = fixedRoller.roll('5d20w1');
+            const result = fixedDiceTower.roll('5d20w1');
 
             expect(result.result).to.eql(3);
         });
 
         it('5d20, Worst 2', () => {
-            const result = fixedRoller.roll('5d20w2');
+            const result = fixedDiceTower.roll('5d20w2');
 
             expect(result.calculations[1].length).to.eql(2);
             expect(result.calculations[1][0]).to.eql(3);
@@ -233,8 +236,8 @@ describe('node-roll', () => {
 
     describe('CLI utility', () => {
         const command = process.platform === 'win32' ?
-            'node ././bin/roll' :
-            `${__dirname}/../bin/roll`;
+            'node ././bin/dice-tower' :
+            `${__dirname}/../bin/dice-tower`;
 
         it('correctly outputs results', done => {
             exec(`${command} 2d20`, (error, stdout) => {

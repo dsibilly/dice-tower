@@ -3,12 +3,12 @@ import InvalidInputError from './InvalidInputError';
 import transformFunctions from './transforms';
 import transformKeys from './keys';
 
-const Roll = _make({
+const DiceTower = _make({
     _init (seedFunction) {
         if (seedFunction) {
             this._seedFunction = seedFunction;
         } else {
-            this._seedFunction = Math.random.bind(Math);
+            this._seedFunction = () => Math.random();
         }
 
         this._filler = [];
@@ -17,11 +17,11 @@ const Roll = _make({
     },
 
     _parse (diceString) {
-        if (!Roll.validate(diceString)) {
+        if (!DiceTower.validate(diceString)) {
             throw new InvalidInputError(diceString);
         }
 
-        const match = Roll._regex.exec(diceString),
+        const match = DiceTower._regex.exec(diceString),
             quantity = match[1], // 2d20+3 => 2
             segments = diceString.split(/[+-]/),
             sides = match[2], // 2d20+3 => 20
@@ -159,8 +159,8 @@ const Roll = _make({
     _regex: /^(\d*)d(\d+|%)(([+\-/*bw])(\d+))?(([+\-/*])(\d+|(\d*)d(\d+|%)(([+\-/*bw])(\d+))?))*$/,
 
     validate (diceString) {
-        return Roll._regex.test(diceString);
+        return DiceTower._regex.test(diceString);
     }
 });
 
-export default Roll;
+export default DiceTower;

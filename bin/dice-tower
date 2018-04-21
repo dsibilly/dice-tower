@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+/* eslint no-console: 0, no-process-exit: 0 */
+const query = process.argv.slice(2)[0],
+    DiceTower = require(`${__dirname}/../lib/DiceTower`).default,
+    diceTower = new DiceTower();
+
+try {
+    console.log(diceTower.roll(query).result);
+} catch (error) {
+    console.error(`${error.name}: ${error.message}`);
+    process.exit(1);
+}
