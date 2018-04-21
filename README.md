@@ -2,14 +2,14 @@
 
 dice-tower is a node.js module for rolling dice and adding modifiers (e.g. "3d6+2"). This project was forked from [node-roll](https://github.com/troygoode/node-roll).
 
-[![build status](https://secure.travis-ci.org/dsibilly/dice-tower.png)](http://travis-ci.org/dsibilly/dice-tower)
+[![Build Status](https://travis-ci.org/dsibilly/node-roll.svg?branch=master)](https://travis-ci.org/dsibilly/node-roll)
 
 ## How To Use (From Shell)
 
 ### Installation (via [npm](https://npmjs.org/package/dice-tower))
 
 ```bash
-$ npm install -g dice-tower
+$ npm install -g @dsibilly/dice-tower
 ```
 
 ### Usage
@@ -28,7 +28,7 @@ $ dice-tower d%
 ### Installation (via [npm](https://npmjs.org/package/dice-tower))
 
 ```bash
-$ npm install dice-tower
+$ npm install @dsibilly/dice-tower
 ```
 
 ### Usage
@@ -36,7 +36,7 @@ $ npm install dice-tower
 Get an instance of the library:
 
 ```javascript
-var DiceTower = require('dice-tower'),
+var DiceTower = require('@dsibilly/dice-tower'),
   diceTower = new DiceTower();
 ```
 
@@ -150,21 +150,14 @@ if (!valid) {
 ```
 
 ## Credits
-
-Inspired by [Phillip Newton's Games::Dice](http://search.cpan.org/~pne/Games-Dice-0.02/Dice.pm).
+Forked from [Troy Goode](https://github.com/TroyGoode/)'s node-roll module.
+node-roll originally inspired by [Phillip Newton's Games::Dice](http://search.cpan.org/~pne/Games-Dice-0.02/Dice.pm).
 
 ## License
-
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
-
 ## Maintainer
-
 [Duane Sibilly](https://github.com/dsibilly/)
-
-## Original Author
-
-[Troy Goode](https://github.com/TroyGoode/) ([troygoode@gmail.com](mailto:troygoode@gmail.com))
 
 ## Contributors
 - Mark Funk

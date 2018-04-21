@@ -93,7 +93,7 @@
     ],
     "license": "MIT",
     "main": "lib/DiceTower.js",
-    "name": "dice-tower",
+    "name": "@dsibilly/dice-tower",
     "repository": {
         "type": "git",
         "url": "git://github.com/dsibilly/dice-tower.git"
