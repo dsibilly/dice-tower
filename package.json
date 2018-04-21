@@ -1,5 +1,5 @@
 {
-    "author": "Troy Goode <troygoode@gmail.com> (https://github.com/troygoode/)",
+    "author": "Duane Sibilly <duane@sibilly.com> (https://github.com/dsibilly/)",
     "babel": {
         "comments": false,
         "plugins": [
@@ -12,12 +12,17 @@
         "sourceMaps": "inline"
     },
     "bin": {
-        "roll": "bin/roll"
+        "dice-tower": "bin/dice-tower"
     },
     "bugs": {
-        "url": "https://github.com/dsibilly/node-roll/issues"
+        "url": "https://github.com/dsibilly/dice-tower/issues"
     },
     "contributors": [
+        {
+            "email": "troygoode@gmail.com",
+            "name": "Troy Goode",
+            "web": "https://github.com/troygoode"
+        },
         {
             "email": "cajahnke@users.noreply.github.com",
             "name": "cajahnke",
@@ -38,7 +43,7 @@
         "isotropic-error": "^0.6.0",
         "isotropic-make": "^0.6.0"
     },
-    "description": "node.js package for rolling dice and adding modifiers. ex: 2d6+1",
+    "description": "A Node.js module for rolling dice and adding modifiers, e.g.: 3d6+2. Forked from node-roll.",
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "babel-core": "^6.26.0",
@@ -54,7 +59,8 @@
         "nsp": "^3.2.1"
     },
     "engines": {
-        "node": ">=6"
+        "node": ">=8",
+        "npm": ">=5"
     },
     "eslintConfig": {
         "env": {
@@ -75,9 +81,10 @@
         },
         "root": true
     },
-    "homepage": "https://github.com/dsibilly/node-roll/",
+    "homepage": "https://github.com/dsibilly/dice-tower/",
     "keywords": [
         "dice",
+        "dice tower",
         "games",
         "random",
         "role playing",
@@ -85,11 +92,11 @@
         "rpg"
     ],
     "license": "MIT",
-    "main": "lib/index.js",
-    "name": "roll",
+    "main": "lib/DiceTower.js",
+    "name": "dice-tower",
     "repository": {
         "type": "git",
-        "url": "git://github.com/dsibilly/node-roll.git"
+        "url": "git://github.com/dsibilly/dice-tower.git"
     },
     "scripts": {
         "build": "BABEL_ENV=build babel js -d lib",
@@ -101,7 +108,7 @@
         "pretest": "npm run lint",
         "rebuild": "rm -rf ./node_modules && rm package-lock.json && npm install",
         "securityCheck": "nsp check",
-        "test": "babel-node ./node_modules/.bin/babel-istanbul test _mocha"
+        "test": "npm run build && babel-node ./node_modules/.bin/babel-istanbul test _mocha"
     },
-    "version": "1.3.1"
+    "version": "1.0.0"
 }
