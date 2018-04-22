@@ -1,5 +1,6 @@
 import _make from 'isotropic-make';
 import InvalidInputError from './InvalidInputError';
+import MersenneTwister from './MersenneTwister';
 import transformFunctions from './transforms';
 import transformKeys from './keys';
 
@@ -8,7 +9,9 @@ const DiceTower = _make({
         if (seedFunction) {
             this._seedFunction = seedFunction;
         } else {
-            this._seedFunction = () => Math.random();
+            this._generator = new MersenneTwister();
+
+            this._seedFunction = () => this._generator.random();
         }
 
         this._filler = [];
