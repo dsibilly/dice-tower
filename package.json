@@ -110,5 +110,5 @@
         "securityCheck": "nsp check",
         "test": "npm run build && babel-node ./node_modules/.bin/babel-istanbul test _mocha"
     },
-    "version": "1.0.0"
+    "version": "1.1.0"
 }
