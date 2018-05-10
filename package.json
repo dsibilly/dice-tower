@@ -56,7 +56,8 @@
         "eslint": "^4.19.1",
         "eslint-config-isotropic": "^0.6.0",
         "mocha": "^5.1.0",
-        "nsp": "^3.2.1"
+        "nsp": "^3.2.1",
+        "pre-commit": "^1.2.2"
     },
     "engines": {
         "node": ">=8",
