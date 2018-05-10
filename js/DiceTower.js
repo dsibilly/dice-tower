@@ -9,9 +9,9 @@ const DiceTower = _make({
         if (seedFunction) {
             this._seedFunction = seedFunction;
         } else {
-            this._generator = new MersenneTwister();
+            this.__generator = new MersenneTwister();
 
-            this._seedFunction = () => this._generator.random();
+            this._seedFunction = () => this.__generator.random();
         }
 
         this._filler = [];
