@@ -56,12 +56,11 @@
         "eslint": "^4.19.1",
         "eslint-config-isotropic": "^0.6.0",
         "mocha": "^5.1.0",
-        "nsp": "^3.2.1",
         "pre-commit": "^1.2.2"
     },
     "engines": {
         "node": ">=8",
-        "npm": ">=5"
+        "npm": ">=6"
     },
     "eslintConfig": {
         "env": {
@@ -105,10 +104,9 @@
         "lint": "node_modules/.bin/eslint bin js",
         "posttest": "[ -z \"$npm_config_coverage\" ] || babel-istanbul check-coverage --branches 80 --functions 100 --lines 100 --statements 100",
         "prepare": "npm run build",
-        "prepublishOnly": "npm run securityCheck && npm test --coverage",
+        "prepublishOnly": "npm audit && npm test --coverage",
         "pretest": "npm run lint",
         "rebuild": "rm -rf ./node_modules && rm package-lock.json && npm install",
-        "securityCheck": "nsp check",
         "test": "npm run build && babel-node ./node_modules/.bin/babel-istanbul test _mocha"
     },
     "version": "1.1.0"
