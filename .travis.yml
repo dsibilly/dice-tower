@@ -3,9 +3,9 @@ addons:
         repo_token: $CODECLIMATE_REPO_TOKEN
 language: node_js
 node_js:
-    - "6"
     - "8"
-before_install: if [[ `npm -v` != 5* ]]; then npm i -g npm@5; fi
+    - "10"
+    - "11"
 after_success:
     - npm run coverage
     - npm install -g codeclimate-test-reporter
