@@ -1,4 +1,12 @@
 const keys = {
+    '*': value => [
+        'sum',
+        [
+            'multiply',
+            value
+        ]
+    ],
+
     '+': value => [
         'sum',
         [
@@ -11,14 +19,6 @@ const keys = {
         'sum',
         [
             'subtract',
-            value
-        ]
-    ],
-
-    '*': value => [
-        'sum',
-        [
-            'multiply',
             value
         ]
     ],
