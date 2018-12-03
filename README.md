@@ -2,7 +2,7 @@
 
 dice-tower is a node.js module for rolling dice and adding modifiers (e.g. "3d6+2"). This project was forked from [node-roll](https://github.com/troygoode/node-roll).
 
-[![Build Status](https://travis-ci.org/dsibilly/dice-tower.svg?branch=master)](https://travis-ci.org/dsibilly/dice-tower)
+[![Build Status](https://travis-ci.org/dsibilly/dice-tower.svg?branch=master)](https://travis-ci.org/dsibilly/dice-tower) [![Coverage Status](https://coveralls.io/repos/github/dsibilly/dice-tower/badge.svg?branch=master)](https://coveralls.io/github/dsibilly/dice-tower?branch=master)
 
 ## How To Use (From Shell)
 
