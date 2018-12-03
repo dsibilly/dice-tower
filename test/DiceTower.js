@@ -246,7 +246,7 @@ describe('dice-tower', () => {
                     return;
                 }
 
-                expect(/^\d+\n$/.test(stdout)).to.be.true;
+                expect(/^\d+\n$/u.test(stdout)).to.be.true;
                 done();
             });
         });

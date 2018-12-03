@@ -1,4 +1,5 @@
 .DS_Store
+.nyc_output
 lib
 coverage
 node_modules
