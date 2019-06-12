@@ -43,28 +43,28 @@
         }
     ],
     "dependencies": {
-        "isotropic-error": "~0.7.0",
-        "isotropic-make": "~0.7.0",
-        "presage": "~0.2.0"
+        "isotropic-error": "~0.10.0",
+        "isotropic-make": "~0.10.0",
+        "presage": "^0.2.2"
     },
     "description": "A Node.js module for rolling dice and adding modifiers, e.g.: 3d6+2. Forked from node-roll.",
     "devDependencies": {
-        "@babel/cli": "~7.1.5",
-        "@babel/core": "~7.1.6",
-        "@babel/node": "~7.0.0",
-        "@babel/preset-env": "~7.1.6",
-        "@babel/register": "~7.0.0",
-        "@babel/runtime": "~7.1.5",
-        "babel-plugin-istanbul": "~5.1.0",
-        "babel-plugin-transform-line": "~0.5.0",
+        "@babel/cli": "~7.4.4",
+        "@babel/core": "~7.4.5",
+        "@babel/node": "~7.4.5",
+        "@babel/preset-env": "~7.4.5",
+        "@babel/register": "~7.4.4",
+        "@babel/runtime": "~7.4.5",
+        "babel-plugin-istanbul": "~5.1.4",
+        "babel-plugin-transform-line": "~0.8.0",
         "chai": "~4.2.0",
-        "coveralls": "~3.0.2",
+        "coveralls": "~3.0.4",
         "cross-env": "~5.2.0",
-        "depcheck": "~0.6.11",
-        "eslint": "~5.9.0",
-        "eslint-plugin-isotropic": "~0.2.0",
-        "mocha": "~5.2.0",
-        "nyc": "~13.1.0",
+        "depcheck": "~0.8.0",
+        "eslint": "~5.16.0",
+        "eslint-plugin-isotropic": "~0.5.0",
+        "mocha": "~6.1.4",
+        "nyc": "~14.1.1",
         "pre-commit": "~1.2.2"
     },
     "engines": {
@@ -92,6 +92,7 @@
         ],
         "root": true,
         "rules": {
+            "isotropic/sort-vars": 0,
             "sort-imports": 0
         }
     },
@@ -136,7 +137,7 @@
     "scripts": {
         "build": "BABEL_ENV=build babel js -d lib",
         "coverage": "nyc check-coverage",
-        "lint": "node_modules/.bin/eslint bin/* js test",
+        "lint": "node_modules/.bin/eslint bin/* js",
         "posttest": "[ -z \"$npm_config_coverage\" ] || nyc check-coverage",
         "prepare": "npm run build",
         "prepublishOnly": "npm audit && nyc check-coverage",
