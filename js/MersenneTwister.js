@@ -1,7 +1,7 @@
 /* eslint no-bitwise: 0 */
 import _make from 'isotropic-make';
 
-const MersenneTwister = _make({
+const _MersenneTwister = _make({
     random () {
         return this.randomInt() * (1.0 / 4294967296.0);
     },
@@ -15,37 +15,37 @@ const MersenneTwister = _make({
     },
 
     randomInt () {
-        const mag01 = [0x0, MersenneTwister.MATRIX_A];
+        const mag01 = [0x0, _MersenneTwister.MATRIX_A];
 
         let y;
 
-        if (this.mtIndex >= MersenneTwister.N) {
+        if (this.mtIndex >= _MersenneTwister.N) {
             let kk;
 
             /*
             This code is unreachable in this revision, as there is no
-            condition under which a MersenneTwister object can be
+            condition under which a _MersenneTwister object can be
             created wherein _initWithSeed() is not called...
             */
             /*
-            if (this.mtIndex === MersenneTwister.N + 1) {
+            if (this.mtIndex === _MersenneTwister.N + 1) {
                 // If _initWithSeed has not been called, a default initial seed is used.
                 this._initWithSeed(5489);
             }
             */
 
-            for (kk = 0; kk < MersenneTwister.N - MersenneTwister.M; kk += 1) {
-                y = (this.mt[kk] & MersenneTwister.UPPER_MASK) | (this.mt[kk + 1] & MersenneTwister.LOWER_MASK);
-                this.mt[kk] = this.mt[kk + MersenneTwister.M] ^ (y >>> 1) ^ mag01[y & 0x1];
+            for (kk = 0; kk < _MersenneTwister.N - _MersenneTwister.M; kk += 1) {
+                y = (this.mt[kk] & _MersenneTwister.UPPER_MASK) | (this.mt[kk + 1] & _MersenneTwister.LOWER_MASK);
+                this.mt[kk] = this.mt[kk + _MersenneTwister.M] ^ (y >>> 1) ^ mag01[y & 0x1];
             }
 
-            for (; kk < MersenneTwister.N - 1; kk += 1) {
-                y = (this.mt[kk] & MersenneTwister.UPPER_MASK) | (this.mt[kk + 1] & MersenneTwister.LOWER_MASK);
-                this.mt[kk] = this.mt[kk + (MersenneTwister.M - MersenneTwister.N)] ^ (y >>> 1) ^ mag01[y & 0x1];
+            for (; kk < _MersenneTwister.N - 1; kk += 1) {
+                y = (this.mt[kk] & _MersenneTwister.UPPER_MASK) | (this.mt[kk + 1] & _MersenneTwister.LOWER_MASK);
+                this.mt[kk] = this.mt[kk + (_MersenneTwister.M - _MersenneTwister.N)] ^ (y >>> 1) ^ mag01[y & 0x1];
             }
 
-            y = (this.mt[MersenneTwister.N - 1] & MersenneTwister.UPPER_MASK) | (this.mt[0] & MersenneTwister.LOWER_MASK);
-            this.mt[MersenneTwister.N - 1] = this.mt[MersenneTwister.M - 1] ^ (y >>> 1) ^ mag01[y & 0x1];
+            y = (this.mt[_MersenneTwister.N - 1] & _MersenneTwister.UPPER_MASK) | (this.mt[0] & _MersenneTwister.LOWER_MASK);
+            this.mt[_MersenneTwister.N - 1] = this.mt[_MersenneTwister.M - 1] ^ (y >>> 1) ^ mag01[y & 0x1];
 
             this.mtIndex = 0;
         }
@@ -77,8 +77,8 @@ const MersenneTwister = _make({
             seed = new Date().getTime();
         }
 
-        this.mt = new Array(MersenneTwister.N); // State vector Array
-        this.mtIndex = MersenneTwister.N + 1; // mt[N] is not initialized
+        this.mt = new Array(_MersenneTwister.N); // State vector Array
+        this.mtIndex = _MersenneTwister.N + 1; // mt[N] is not initialized
 
         if (seed.constructor === Array) {
             this._initWithArray(seed);
@@ -92,8 +92,8 @@ const MersenneTwister = _make({
     _initWithArray (array) {
         let i = 1,
             j = 0,
-            k = MersenneTwister.N > array.length ?
-                MersenneTwister.N :
+            k = _MersenneTwister.N > array.length ?
+                _MersenneTwister.N :
                 array.length;
 
         this._initWithSeed(19650218);
@@ -107,8 +107,8 @@ const MersenneTwister = _make({
             i += 1;
             j += 1;
 
-            if (i >= MersenneTwister.N) {
-                this.mt[0] = this.mt[MersenneTwister.N - 1];
+            if (i >= _MersenneTwister.N) {
+                this.mt[0] = this.mt[_MersenneTwister.N - 1];
                 i = 1;
             }
 
@@ -117,7 +117,7 @@ const MersenneTwister = _make({
             }
         }
 
-        for (k = MersenneTwister.N - 1; k; k -= 1) {
+        for (k = _MersenneTwister.N - 1; k; k -= 1) {
             const s = this.mt[i - 1] ^ (this.mt[i - 1] >>> 30);
 
             this.mt[i] = (this.mt[i] ^ (((((s & 0xffff0000) >>> 16) * 1566083941) << 16) + (s & 0x0000ffff) * 1566083941)) - i;
@@ -125,8 +125,8 @@ const MersenneTwister = _make({
 
             i += 1;
 
-            if (i >= MersenneTwister.N) {
-                this.mt[0] = this.mt[MersenneTwister.N - 1];
+            if (i >= _MersenneTwister.N) {
+                this.mt[0] = this.mt[_MersenneTwister.N - 1];
                 i = 1;
             }
         }
@@ -137,7 +137,7 @@ const MersenneTwister = _make({
     _initWithSeed (seed) {
         this.mt[0] = seed >>> 0;
 
-        for (this.mtIndex = 1; this.mtIndex < MersenneTwister.N; this.mtIndex += 1) {
+        for (this.mtIndex = 1; this.mtIndex < _MersenneTwister.N; this.mtIndex += 1) {
             const s = this.mt[this.mtIndex - 1] ^ (this.mt[this.mtIndex - 1] >>> 30);
 
             this.mt[this.mtIndex] = (((((s & 0xffff0000) >>> 16) * 1812433253) << 16) + (s & 0x0000ffff) * 1812433253) + this.mtIndex;
@@ -152,4 +152,4 @@ const MersenneTwister = _make({
     UPPER_MASK: 0x80000000 // Most significant W-R bits
 });
 
-export default MersenneTwister;
+export default _MersenneTwister;

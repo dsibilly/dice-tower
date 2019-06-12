@@ -1,13 +1,13 @@
 import _make from 'isotropic-make';
-import InvalidInputError from './InvalidInputError';
-import MersenneTwister from './MersenneTwister';
-import transformFunctions from './transforms';
-import transformKeys from './keys';
+import _InvalidInputError from './InvalidInputError';
+import _MersenneTwister from './MersenneTwister';
+import _transformFunctions from './transforms';
+import _transformKeys from './keys';
 
-const DiceTower = _make({
+const _DiceTower = _make({
     roll (query, invokedByParse) {
         if (!query) {
-            throw new InvalidInputError();
+            throw new _InvalidInputError();
         }
 
         if (typeof query === 'string') {
@@ -35,7 +35,7 @@ const DiceTower = _make({
             if (typeof transformation === 'function') {
                 transformationFunction = transformation;
             } else if (typeof transformation === 'string') { // 'sum'
-                transformationFunction = transformFunctions[transformation];
+                transformationFunction = _transformFunctions[transformation];
             } else if (transformation instanceof Array) { // [ 'add', 3 ]
                 if (transformation[0] instanceof Array) {
                     sumResult = true;
@@ -47,12 +47,12 @@ const DiceTower = _make({
                     transformation = transformation[1];
                 }
 
-                transformationFunction = transformFunctions[transformation[0]]; // fn for 'add'
+                transformationFunction = _transformFunctions[transformation[0]]; // fn for 'add'
                 transformationAdditionalParameter = transformation[1];
             }
 
             if (sumParam && previous[0] instanceof Array) {
-                previous[0] = transformFunctions[cleaner](previous[0]);
+                previous[0] = _transformFunctions[cleaner](previous[0]);
             }
 
             previous.unshift(transformationFunction(previous[0], transformationAdditionalParameter));
@@ -64,7 +64,7 @@ const DiceTower = _make({
 
         if (sumResult === true && calculations[0] instanceof Array) {
             calculations[1] = calculations[0];
-            calculations[0] = transformFunctions[cleaner](calculations[0]);
+            calculations[0] = _transformFunctions[cleaner](calculations[0]);
         }
 
         if (!invokedByParse) {
@@ -93,7 +93,7 @@ const DiceTower = _make({
         if (seedFunction) {
             this._seedFunction = seedFunction;
         } else {
-            this.__generator = new MersenneTwister();
+            this.__generator = new _MersenneTwister();
 
             this._seedFunction = () => this.__generator.random();
         }
@@ -104,11 +104,11 @@ const DiceTower = _make({
     },
 
     _parse (diceString) {
-        if (!DiceTower.validate(diceString)) {
-            throw new InvalidInputError(diceString);
+        if (!_DiceTower.validate(diceString)) {
+            throw new _InvalidInputError(diceString);
         }
 
-        const match = DiceTower._regex.exec(diceString),
+        const match = _DiceTower._regex.exec(diceString),
             quantity = match[1], // 2d20+3 => 2
             segments = diceString.split(/[+-]/u),
             sides = match[2], // 2d20+3 => 20
@@ -122,7 +122,7 @@ const DiceTower = _make({
 
         if (segments[0].indexOf('b') !== -1) {
             // A bestOf query...
-            transforms.push(transformKeys[match[4]](parseInt(match[5], 10)));
+            transforms.push(_transformKeys[match[4]](parseInt(match[5], 10)));
         }
 
         for (let s = 1; s < segments.length; s += 1) {
@@ -132,11 +132,11 @@ const DiceTower = _make({
             transformationParameter = segments[s]; // 2d20+3 => 3
 
             if (transformationParameter.indexOf('d') === -1) {
-                transforms.push(transformKeys[operator](parseInt(transformationParameter, 10)));
+                transforms.push(_transformKeys[operator](parseInt(transformationParameter, 10)));
             } else {
                 // Transformation is another roll...
                 outsideRoll = this.roll(transformationParameter, true);
-                transforms.push(transformKeys[operator](outsideRoll.result));
+                transforms.push(_transformKeys[operator](outsideRoll.result));
             }
         }
 
@@ -152,7 +152,7 @@ const DiceTower = _make({
             },
             transformations: hasTransformation || transforms.length !== 0 ?
                 transforms.length === 0 ?
-                    transformKeys[match[4]](parseInt(match[5], 10)) :
+                    _transformKeys[match[4]](parseInt(match[5], 10)) :
                     transforms :
                 ['sum']
         };
@@ -160,10 +160,10 @@ const DiceTower = _make({
 }, {
     // Static properties and methods
     validate (diceString) {
-        return DiceTower._regex.test(diceString);
+        return _DiceTower._regex.test(diceString);
     },
 
     _regex: /^(\d*)d(\d+|%)(([+\-/*bw])(\d+))?(([+\-/*])(\d+|(\d*)d(\d+|%)(([+\-/*bw])(\d+))?))*$/u
 });
 
-export default DiceTower;
+export default _DiceTower;

@@ -1,4 +1,4 @@
-const keys = {
+const _keys = {
     '*': value => [
         'sum',
         [
@@ -48,4 +48,4 @@ const keys = {
     ]
 };
 
-export default keys;
+export default _keys;

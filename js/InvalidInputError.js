@@ -1,7 +1,7 @@
 import _Error from 'isotropic-error';
 import _make from 'isotropic-make';
 
-const InvalidInputError = _make(_Error, {
+const _InvalidInputError = _make(_Error, {
     _init (queryString) {
         this.name = 'InvalidInputError';
 
@@ -18,4 +18,4 @@ const InvalidInputError = _make(_Error, {
     }
 });
 
-export default InvalidInputError;
+export default _InvalidInputError;
