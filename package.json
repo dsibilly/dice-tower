@@ -43,9 +43,10 @@
         }
     ],
     "dependencies": {
+        "@dsibilly/mersenne-twister": "~1.0.1",
         "isotropic-error": "~0.10.0",
         "isotropic-make": "~0.10.0",
-        "presage": "^0.2.2"
+        "presage": "~0.2.2"
     },
     "description": "A Node.js module for rolling dice and adding modifiers, e.g.: 3d6+2. Forked from node-roll.",
     "devDependencies": {
