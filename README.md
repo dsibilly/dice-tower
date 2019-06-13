@@ -36,7 +36,7 @@ $ npm install @dsibilly/dice-tower
 Get an instance of the library:
 
 ```javascript
-var DiceTower = require('@dsibilly/dice-tower'),
+var DiceTower = require('@dsibilly/dice-tower').default,
   diceTower = new DiceTower();
 ```
 
