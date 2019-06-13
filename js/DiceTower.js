@@ -1,6 +1,6 @@
 import _make from 'isotropic-make';
 import _InvalidInputError from './InvalidInputError';
-import _MersenneTwister from './MersenneTwister';
+import _MersenneTwister from '@dsibilly/mersenne-twister';
 import _transformFunctions from './transforms';
 import _transformKeys from './keys';
 
