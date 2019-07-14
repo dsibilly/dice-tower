@@ -35,35 +35,31 @@
         {
             "email": "mfunk86@gmail.com",
             "name": "Mark Funk"
-        },
-        {
-            "email": "duane@sibilly.com",
-            "name": "Duane Sibilly",
-            "web": "https://github.com/dsibilly/"
         }
     ],
     "dependencies": {
-        "@dsibilly/mersenne-twister": "~1.0.1",
+        "@dsibilly/mersenne-twister": "~1.0.3",
         "isotropic-error": "~0.10.0",
         "isotropic-make": "~0.10.0",
-        "presage": "~0.2.2"
+        "presage": "~0.2.3"
     },
     "description": "A Node.js module for rolling dice and adding modifiers, e.g.: 3d6+2. Forked from node-roll.",
     "devDependencies": {
-        "@babel/cli": "~7.4.4",
-        "@babel/core": "~7.4.5",
-        "@babel/node": "~7.4.5",
-        "@babel/preset-env": "~7.4.5",
+        "@babel/cli": "~7.5.0",
+        "@babel/core": "~7.5.4",
+        "@babel/node": "~7.5.0",
+        "@babel/preset-env": "~7.5.4",
         "@babel/register": "~7.4.4",
-        "@babel/runtime": "~7.4.5",
+        "@babel/runtime": "~7.5.4",
         "babel-plugin-istanbul": "~5.1.4",
         "babel-plugin-transform-line": "~0.8.0",
         "chai": "~4.2.0",
-        "coveralls": "~3.0.4",
+        "coveralls": "~3.0.5",
         "cross-env": "~5.2.0",
         "depcheck": "~0.8.0",
-        "eslint": "~5.16.0",
+        "eslint": "~6.0.1",
         "eslint-plugin-isotropic": "~0.5.0",
+        "lodash": ">=4.17.13",
         "mocha": "~6.1.4",
         "nyc": "~14.1.1",
         "pre-commit": "~1.2.2"
