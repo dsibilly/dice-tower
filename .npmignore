@@ -1,4 +1,7 @@
+.nyc_output
+.travis.yml
 coverage
 example.js
 js
 test
+*.sh
