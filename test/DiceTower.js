@@ -53,7 +53,7 @@ describe('dice-tower', () => {
 
     it('uses custom transformation arrays correctly', () => {
         const result = fixedDiceTower.roll({
-            quantity: 2,
+            quantity: 3,
             sides: 20,
             transformations: [
                 'sum',
@@ -64,10 +64,11 @@ describe('dice-tower', () => {
             ]
         });
 
-        expect(result.rolled.length).to.eql(2);
+        expect(result.rolled.length).to.eql(3);
         expect(result.rolled[0]).to.eql(5);
         expect(result.rolled[1]).to.eql(13);
-        expect(result.result).to.eql(20);
+        expect(result.rolled[2]).to.eql(11);
+        expect(result.result).to.eql(31);
     });
 
     it('uses custom transformation functions correctly', () => {
@@ -93,6 +94,27 @@ describe('dice-tower', () => {
         } catch (error) {
             expect(error.name).to.eql('InvalidInputError');
             expect(error.message).to.eql('No input string was supplied to node-roll.');
+            done();
+        }
+    });
+
+    it('fails properly with malformed roll transforms', done => {
+        const badTransforms = {
+            quantity: 1,
+            sides: 6,
+            transformations: [
+                { // objects are not allowed!
+                    multiply: true
+                },
+                'sum'
+            ]
+        };
+
+        try {
+            diceTower.roll(badTransforms);
+            done('Should not be reachable');
+        } catch (error) {
+            expect(error.message).to.eql('Transforms of type object are not a valid for node-roll.');
             done();
         }
     });

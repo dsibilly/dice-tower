@@ -1,5 +1,7 @@
 import _make from 'isotropic-make';
+import _Error from 'isotropic-error';
 import _InvalidInputError from './InvalidInputError';
+import _InvalidTransformError from './InvalidTransformError';
 import _MersenneTwister from '@dsibilly/mersenne-twister';
 import _transformFunctions from './transforms';
 import _transformKeys from './keys';
@@ -27,40 +29,52 @@ const _DiceTower = _make({
 
         this._filler.push(rolled);
 
-        calculations = query.transformations.reduce((previous, transformation) => {
-            let transformationFunction,
-                transformationAdditionalParameter,
-                sumParam = false;
+        try {
+            calculations = query.transformations.reduce((previous, transformation) => {
+                let transformationFunction,
+                    transformationAdditionalParameter,
+                    sumParam = false;
 
-            if (typeof transformation === 'function') {
-                transformationFunction = transformation;
-            } else if (typeof transformation === 'string') { // 'sum'
-                transformationFunction = _transformFunctions[transformation];
-            } else if (transformation instanceof Array) { // [ 'add', 3 ]
-                if (transformation[0] instanceof Array) {
-                    sumResult = true;
-                    cleaner = transformation[1];
-                    transformation = transformation[0];
-                } else if (transformation[1] instanceof Array) {
-                    sumParam = true;
-                    cleaner = transformation[0];
-                    transformation = transformation[1];
+                if (typeof transformation === 'function') {
+                    transformationFunction = transformation;
+                } else if (typeof transformation === 'string') { // 'sum'
+                    transformationFunction = _transformFunctions[transformation];
+                } else if (transformation instanceof Array) { // [ 'add', 3 ]
+                    if (transformation[0] instanceof Array) {
+                        sumResult = true;
+                        cleaner = transformation[1];
+                        transformation = transformation[0];
+                    } else if (transformation[1] instanceof Array) {
+                        sumParam = true;
+                        cleaner = transformation[0];
+                        transformation = transformation[1];
+                    }
+
+                    transformationFunction = _transformFunctions[transformation[0]]; // fn for 'add'
+                    transformationAdditionalParameter = transformation[1];
+                } else {
+                    // Invalid transform type
+                    throw new _Error({
+                        details: {
+                            transformation
+                        },
+                        message: 'Inavlid transformation'
+                    });
                 }
 
-                transformationFunction = _transformFunctions[transformation[0]]; // fn for 'add'
-                transformationAdditionalParameter = transformation[1];
-            }
+                if (sumParam && previous[0] instanceof Array) {
+                    previous[0] = _transformFunctions[cleaner](previous[0]);
+                }
 
-            if (sumParam && previous[0] instanceof Array) {
-                previous[0] = _transformFunctions[cleaner](previous[0]);
-            }
+                previous.unshift(transformationFunction(previous[0], transformationAdditionalParameter));
 
-            previous.unshift(transformationFunction(previous[0], transformationAdditionalParameter));
-
-            return previous;
-        }, [
-            rolled
-        ]);
+                return previous;
+            }, [
+                rolled
+            ]);
+        } catch (error) {
+            throw new _InvalidTransformError(error.details.transformation);
+        }
 
         if (sumResult === true && calculations[0] instanceof Array) {
             calculations[1] = calculations[0];
